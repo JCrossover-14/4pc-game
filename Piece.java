@@ -1,8 +1,8 @@
 public class Piece 
 {
-    private String color;
+    private int color;
 
-    public Piece(String color)
+    public Piece(int color)
     {
         this.color = color;
     }
