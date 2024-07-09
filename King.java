@@ -2,7 +2,7 @@ public class King extends Piece
 {
     private int value = 1;
     
-    public King(String color)
+    public King(int color)
     {
         super(color);
     }
