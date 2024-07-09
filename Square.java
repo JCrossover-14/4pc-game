@@ -13,12 +13,17 @@ public class Square
         this.validity= true;
     }
 
-    public Square(int x, int y)
+    public Square(int x, int y, boolean valid)
     {
         this.x = x;
         this.y = y;
-        this.validity = false;
+        this.validity = valid;
         this.piece = null;
+    }
+
+    public Piece getPiece()
+    {
+        return this.piece;
     }
 
     public void setPiece(Piece piece)
@@ -31,6 +36,8 @@ public class Square
         this.piece = null;
     }
 
-    
-    
+    public boolean getValidity()
+    {
+        return this.validity;
+    }
 }
