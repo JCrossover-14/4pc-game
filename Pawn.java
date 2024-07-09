@@ -2,7 +2,7 @@ public class Pawn extends Piece
 {
     private int value = 1;
     
-    public Pawn(String color)
+    public Pawn(int color)
     {
         super(color);
     }

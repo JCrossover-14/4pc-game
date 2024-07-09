@@ -1,12 +1,11 @@
-import java.util.*;
+
 
 
 public class Knight extends Piece
 {
     private int value = 3;
-    
 
-    public Knight(String color)
+    public Knight(int color)
     {
         super(color);
     }
@@ -15,6 +14,4 @@ public class Knight extends Piece
     {
         return this.value;
     }
-    
-    
 }

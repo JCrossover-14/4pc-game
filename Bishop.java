@@ -2,12 +2,12 @@ public class Bishop extends Piece
 {
     private int value = 5;
     
-    public Bishop(String color)
+    public Bishop(int color)
     {
         super(color);
     }
 
-    
+
     public int getValue()
     {
         return this.value;

@@ -2,7 +2,7 @@ public class Rook extends Piece
 {
     private int value = 5;
     
-    public Rook(String color)
+    public Rook(int color)
     {
         super(color);
     }
