@@ -162,4 +162,410 @@ public class Board
             }
         }
     }
+
+    //Get moves for player (color)
+    public ArrayList<int[]> getMoves(int color)
+    {
+        ArrayList<int[]> moves = new ArrayList<int[]>();
+        int[][] knightMoves = {{1,2},{1,-2},{2,1},{2,-1},{-2,-1},{-2,1},{-1,2},{-1,-2}};
+        for(int i=0;i<14;i++)
+        {
+            for(int j=0;j<14;j++)
+            {
+                Square curSquare = this.board[i][j];
+                Piece curPiece = curSquare.getPiece();
+                if(curSquare.getValidity()&&curPiece!=null&&curPiece.getColor()==color)
+                {
+                    if(curPiece instanceof Knight)
+                    {
+                        // check 1 2, 1 -2, 2 1, 2 -1, -2 -1, -2 1, -1,2, -1, -2
+
+                        for(int[] move:knightMoves)
+                        {
+                            //try i+move[0], j+move[1];
+                            Square moveSquare = this.board[i+move[0]][j+move[1]];
+                            if(moveSquare.getValidity())
+                            {
+                                Piece movePiece = moveSquare.getPiece();
+                                if(movePiece==null)
+                                {
+                                    int[] toAdd = {i,j,i+move[0],j+move[1]};
+                                    moves.add(toAdd);
+                                }
+                                else
+                                {
+                                    if(movePiece.getColor()%2!=curPiece.getColor()%2)
+                                    {
+                                        int[] toAdd = {i,j,i+move[0],j+move[1]};
+                                        moves.add(toAdd);
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    else if(curPiece instanceof Queen || curPiece instanceof Bishop )
+                    {
+                        // check up right diagonal 
+                        for(int dist = 1;dist<=13;dist++)
+                        {
+                            //check +x and +y
+                            if(i+dist>13||j+dist>13)
+                            {
+                                break;
+                            }
+                            Square moveSquare = this.board[i+dist][j+dist];
+                            Piece movePiece = curSquare.getPiece();
+                            if(movePiece==null)
+                            {
+                                int[] toAdd = {i,j,i+dist,j+dist};
+                                moves.add(toAdd);
+                            }
+                            else
+                            {
+                                if(movePiece.getColor()%2!=curPiece.getColor()%2)
+                                {
+                                    int[] toAdd={i,j,i+dist,j+dist};
+                                    moves.add(toAdd);
+                                }
+                                break;
+                            }
+                        }
+
+                        for(int dist = 1;dist<=13;dist++)
+                        {
+                            //check +x and -y
+                            if(i+dist>13||j-dist<0)
+                            {
+                                break;
+                            }
+                            Square moveSquare = this.board[i+dist][j-dist];
+                            Piece movePiece = curSquare.getPiece();
+                            if(movePiece==null)
+                            {
+                                int[] toAdd = {i,j,i+dist,j-dist};
+                                moves.add(toAdd);
+                            }
+                            else
+                            {
+                                if(movePiece.getColor()%2!=curPiece.getColor()%2)
+                                {
+                                    int[] toAdd={i,j,i+dist,j-dist};
+                                    moves.add(toAdd);
+                                }
+                                break;
+                            }
+                        }
+
+                        for(int dist = 1;dist<=13;dist++)
+                        {
+                            //check -x and +y
+                            if(i-dist<0||j+dist>13)
+                            {
+                                break;
+                            }
+                            Square moveSquare = this.board[i-dist][j+dist];
+                            Piece movePiece = curSquare.getPiece();
+                            if(movePiece==null)
+                            {
+                                int[] toAdd = {i,j,i-dist,j+dist};
+                                moves.add(toAdd);
+                            }
+                            else
+                            {
+                                if(movePiece.getColor()%2!=curPiece.getColor()%2)
+                                {
+                                    int[] toAdd={i,j,i-dist,j+dist};
+                                    moves.add(toAdd);
+                                }
+                                break;
+                            }
+                        }
+
+                        for(int dist = 1;dist<=13;dist++)
+                        {
+                            //check -x and -y
+                            if(i-dist<0||j-dist<0)
+                            {
+                                break;
+                            }
+                            Square moveSquare = this.board[i-dist][j-dist];
+                            Piece movePiece = curSquare.getPiece();
+                            if(movePiece==null)
+                            {
+                                int[] toAdd = {i,j,i-dist,j-dist};
+                                moves.add(toAdd);
+                            }
+                            else
+                            {
+                                if(movePiece.getColor()%2!=curPiece.getColor()%2)
+                                {
+                                    int[] toAdd={i,j,i-dist,j-dist};
+                                    moves.add(toAdd);
+                                }
+                                break;
+                            }
+                        }
+
+                    }
+
+                    else if(curPiece instanceof Rook||curPiece instanceof Queen)
+                    {
+                        for(int dist = 1;dist<=13;dist++)
+                        {
+                            //move up 
+                            if(i+dist>13)
+                            {
+                                break;
+                            }
+                            Square moveSquare = this.board[i+dist][j];
+                            Piece movePiece = moveSquare.getPiece();
+                            if(movePiece==null)
+                            {
+                                int[] toAdd = {i,j,i+dist,j};
+                                moves.add(toAdd);
+                            }
+                            else
+                            {
+                                if(movePiece.getColor()%2!=curPiece.getColor()%2)
+                                {
+                                    int[] toAdd = {i,j,i+dist,j};
+                                    moves.add(toAdd);
+                                }
+                                break;
+                            }
+                        }
+                        for(int dist = 1;dist<=13;dist++)
+                        {
+                            //move right
+                            if(j+dist>13)
+                            {
+                                break;
+                            }
+                            Square moveSquare = this.board[i][j+dist];
+                            Piece movePiece = moveSquare.getPiece();
+                            if(movePiece==null)
+                            {
+                                int[] toAdd = {i,j,i,j+dist};
+                                moves.add(toAdd);
+                            }
+                            else
+                            {
+                                if(movePiece.getColor()%2!=curPiece.getColor()%2)
+                                {
+                                    int[] toAdd = {i,j,i,j+dist};
+                                    moves.add(toAdd);
+                                }
+                                break;
+                            }
+                        }
+
+                        for(int dist = 1;dist<=13;dist++)
+                        {
+                            //move down
+                            if(i-dist<0)
+                            {
+                                break;
+                            }
+                            Square moveSquare = this.board[i-dist][j];
+                            Piece movePiece = moveSquare.getPiece();
+                            if(movePiece==null)
+                            {
+                                int[] toAdd = {i,j,i-dist,j};
+                                moves.add(toAdd);
+                            }
+                            else
+                            {
+                                if(movePiece.getColor()%2!=curPiece.getColor()%2)
+                                {
+                                    int[] toAdd = {i,j,i-dist,j};
+                                    moves.add(toAdd);
+                                }
+                                break;
+                            }
+                        }
+                        
+                        for(int dist = 1;dist<=13;dist++)
+                        {
+                            //move lefft
+                            if(j-dist<0)
+                            {
+                                break;
+                            }
+                            Square moveSquare = this.board[i][j-dist];
+                            Piece movePiece = moveSquare.getPiece();
+                            if(movePiece==null)
+                            {
+                                int[] toAdd = {i,j,i,j-dist};
+                                moves.add(toAdd);
+                            }
+                            else
+                            {
+                                if(movePiece.getColor()%2!=curPiece.getColor()%2)
+                                {
+                                    int[] toAdd = {i,j,i,j-dist};
+                                    moves.add(toAdd);
+                                }
+                                break;
+                            }
+                        }
+                        
+                        
+                    }
+                    else if(curPiece instanceof King)
+                    {
+
+                    }
+                    else if(curPiece instanceof Pawn)
+                    {
+                        //check forward
+                        int curColor = curPiece.getColor();
+                        if(curColor==1)
+                        {
+                            //direction is i+1 for red
+                            Square moveSquare = this.board[i+1][j];
+                            if(moveSquare.getPiece()==null)
+                            {
+                                int[] toAdd = {i,j,i+1,j};
+                                moves.add(toAdd);
+                                if(i==1)
+                                {
+                                    moveSquare = this.board[i+2][j];
+                                    if(moveSquare.getPiece()==null)
+                                    {
+                                        toAdd[2]+=1;
+                                        moves.add(toAdd);
+                                    }
+                                }
+                            }
+                            //check if pawn is on starting square
+                            
+                            //check for captures
+                            Piece capPiece1 = this.board[i+1][j-1].getPiece();
+                            Piece capPiece2 = this.board[i+1][j+1].getPiece();
+                            
+                            if(capPiece1!=null && capPiece1.getColor()%2!=curColor%2)
+                            {
+                                int[] toAdd = {i,j,i+1,j-1};
+                                moves.add(toAdd);
+                            }
+                            if(capPiece2!=null && capPiece2.getColor()%2!=curColor%2)
+                            {
+                                int[] toAdd = {i,j,i+1,j+1};
+                                moves.add(toAdd);
+                            }
+                            //Handle Enpassant 
+                        }
+                        else if(curColor==2)
+                        {
+                            //direction is j+1 for blue
+                            Square moveSquare = this.board[i][j+1];
+                            if(moveSquare.getPiece()==null)
+                            {
+                                int[] toAdd = {i,j,i,j+1};
+                                moves.add(toAdd);
+                                if(j==1)
+                                {
+                                    moveSquare = this.board[i][j+2];
+                                    if(moveSquare.getPiece()==null)
+                                    {
+                                        toAdd[3]+=1;
+                                        moves.add(toAdd);
+                                    }
+                                }
+                            }
+                            //check if pawn is on starting square
+                            //check for captures
+                            Piece capPiece1 = this.board[i+1][j+1].getPiece();
+                            Piece capPiece2 = this.board[i-1][j+1].getPiece();
+                            
+                            if(capPiece1!=null && capPiece1.getColor()%2!=curColor%2)
+                            {
+                                int[] toAdd = {i,j,i+1,j+1};
+                                moves.add(toAdd);
+                            }
+                            if(capPiece2!=null && capPiece2.getColor()%2!=curColor%2)
+                            {
+                                int[] toAdd = {i,j,i-1,j+1};
+                                moves.add(toAdd);
+                            }
+                        }
+                        else if(curColor==3)
+                        {
+                            // direction is i-1 for yellow 
+                            Square moveSquare = this.board[i-1][j];
+                            if(moveSquare.getPiece()==null)
+                            {
+                                int[] toAdd = {i,j,i-1,j};
+                                moves.add(toAdd);
+                                if(i==12)
+                                {
+                                    moveSquare = this.board[i-2][j];
+                                    if(moveSquare.getPiece()==null)
+                                    {
+                                        toAdd[2]-=1;
+                                        moves.add(toAdd);
+                                    }
+                                }
+                            }
+                            //check if pawn is on starting square
+                            
+                            //check for captures
+                            Piece capPiece1 = this.board[i-1][j-1].getPiece();
+                            Piece capPiece2 = this.board[i-1][j+1].getPiece();
+                            
+                            if(capPiece1!=null && capPiece1.getColor()%2!=curColor%2)
+                            {
+                                int[] toAdd = {i,j,i+1,j-1};
+                                moves.add(toAdd);
+                            }
+                            if(capPiece2!=null && capPiece2.getColor()%2!=curColor%2)
+                            {
+                                int[] toAdd = {i,j,i+1,j+1};
+                                moves.add(toAdd);
+                            }
+                        }
+                        else
+                        {
+                            // direction is j-1 for green
+                            Square moveSquare = this.board[i][j-1];
+                            if(moveSquare.getPiece()==null)
+                            {
+                                int[] toAdd = {i,j,i,j-1};
+                                moves.add(toAdd);
+                                if(j==12)
+                                {
+                                    moveSquare = this.board[i][j-2];
+                                    if(moveSquare.getPiece()==null)
+                                    {
+                                        toAdd[3]-=1;
+                                        moves.add(toAdd);
+                                    }
+                                }
+                            }
+                            //check if pawn is on starting square
+                            
+                            //check for captures
+                            Piece capPiece1 = this.board[i+1][j-1].getPiece();
+                            Piece capPiece2 = this.board[i-1][j-1].getPiece();
+                            
+                            if(capPiece1!=null && capPiece1.getColor()%2!=curColor%2)
+                            {
+                                int[] toAdd = {i,j,i+1,j-1};
+                                moves.add(toAdd);
+                            }
+                            if(capPiece2!=null && capPiece2.getColor()%2!=curColor%2)
+                            {
+                                int[] toAdd = {i,j,i-1,j-1};
+                                moves.add(toAdd);
+                            }
+                        }
+
+                    }
+
+                }
+            }
+        }
+        return moves;
+    }
 }
