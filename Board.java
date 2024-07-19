@@ -423,23 +423,32 @@ public class Board
                 {
                     if(curPiece instanceof Knight)
                     {
+                        ArrayList<int[]> knightm = getKnightMoves(i,j);
+                        for(int[] x:knightm) moves.add(x);
                         // check 1 2, 1 -2, 2 1, 2 -1, -2 -1, -2 1, -1,2, -1, -2
                     }
-                    else if(curPiece instanceof Queen || curPiece instanceof Bishop )
+                    else if(curPiece instanceof Bishop )
                     {
                         // check up right diagonal 
-                        
+                        ArrayList<int[]> bishopm = getBishopMoves(i, j);
+                        for(int[] x:bishopm) moves.add(x);
                     }
 
-                    else if(curPiece instanceof Rook||curPiece instanceof Queen)
+                    else if(curPiece instanceof Rook)
                     {
-                        
-                        
-                        
+                        ArrayList<int[]> rookm = getRookMoves(i,j);
+                        for(int[] x: rookm) moves.add(x);
+                    }
+                    else if(curPiece instanceof Queen)
+                    {
+                        ArrayList<int[]> rookm = getRookMoves(i,j);
+                        for(int[] x:rookm) moves.add(x);
+                        ArrayList<int[]> bishopm = getBishopMoves(i, j);
+                        for(int[] x:bishopm) moves.add(x);
                     }
                     else if(curPiece instanceof King)
                     {
-
+                        
                     }
                     else if(curPiece instanceof Pawn)
                     {
