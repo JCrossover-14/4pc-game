@@ -1,10 +1,11 @@
 public class King extends Piece 
 {
     private int value = 1;
-    
+    private boolean moved;
     public King(int color)
     {
         super(color);
+        this.moved = false;
     }
 
     
@@ -12,4 +13,15 @@ public class King extends Piece
     {
         return this.value;
     }
+
+    public void setMoved(boolean moved)
+    {
+        this.moved= moved;
+    }
+
+    public boolean getMoved()
+    {
+        return this.moved;
+    }
+
 }

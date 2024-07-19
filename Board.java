@@ -163,11 +163,40 @@ public class Board
         }
     }
 
+    public ArrayList<int[]> getKnightMoves(int i,int j)
+    {
+        int[][] knightMoves = {{1,2},{1,-2},{2,1},{2,-1},{-2,-1},{-2,1},{-1,2},{-1,-2}};
+        ArrayList<int[]> moves = new ArrayList<int[]>();
+        Piece curPiece = this.board[i][j].getPiece();
+        for(int[] move:knightMoves)
+        {
+            Square moveSquare = this.board[i+move[0]][j+move[1]];
+            if(moveSquare.getValidity())
+            {
+                Piece movePiece = moveSquare.getPiece();
+                if(movePiece==null)
+                {
+                    int[] toAdd = {i,j,i+move[0],j+move[1]};
+                    moves.add(toAdd);
+                }
+                else
+                {
+                    if(movePiece.getColor()%2!=curPiece.getColor()%2)
+                    {
+                        int[] toAdd = {i,j,i+move[0],j+move[1]};
+                        moves.add(toAdd);
+                    }
+                }
+            }
+        }
+        return moves;
+        
+    }
     //Get moves for player (color)
     public ArrayList<int[]> getMoves(int color)
     {
         ArrayList<int[]> moves = new ArrayList<int[]>();
-        int[][] knightMoves = {{1,2},{1,-2},{2,1},{2,-1},{-2,-1},{-2,1},{-1,2},{-1,-2}};
+        
         for(int i=0;i<14;i++)
         {
             for(int j=0;j<14;j++)
@@ -179,29 +208,7 @@ public class Board
                     if(curPiece instanceof Knight)
                     {
                         // check 1 2, 1 -2, 2 1, 2 -1, -2 -1, -2 1, -1,2, -1, -2
-
-                        for(int[] move:knightMoves)
-                        {
-                            //try i+move[0], j+move[1];
-                            Square moveSquare = this.board[i+move[0]][j+move[1]];
-                            if(moveSquare.getValidity())
-                            {
-                                Piece movePiece = moveSquare.getPiece();
-                                if(movePiece==null)
-                                {
-                                    int[] toAdd = {i,j,i+move[0],j+move[1]};
-                                    moves.add(toAdd);
-                                }
-                                else
-                                {
-                                    if(movePiece.getColor()%2!=curPiece.getColor()%2)
-                                    {
-                                        int[] toAdd = {i,j,i+move[0],j+move[1]};
-                                        moves.add(toAdd);
-                                    }
-                                }
-                            }
-                        }
+                        
                         
                     }
                     else if(curPiece instanceof Queen || curPiece instanceof Bishop )

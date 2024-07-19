@@ -4,6 +4,9 @@ public class Square
     private static int y;
     private boolean validity;
     private Piece piece;
+
+    private int attackedByR;
+    private int attackedByB;
     
     public Square(int x, int y, Piece piece)
     {
@@ -11,6 +14,8 @@ public class Square
         this.y = y;
         this.piece = piece;
         this.validity= true;
+        this.attackedByR = 0;
+        this.attackedByB = 0;
     }
 
     public Square(int x, int y, boolean valid)
@@ -40,4 +45,19 @@ public class Square
     {
         return this.validity;
     }
+
+    public void addAttacker(int color)
+    {
+        if(color%2==0) this.attackedByR++;
+        else this.attackedByB++;
+    }
+
+    public void removeAttacker(int color)
+    {
+        if(color%2==0) this.attackedByR--;
+        else this.attackedByB--;
+    }
+
+
+    
 }

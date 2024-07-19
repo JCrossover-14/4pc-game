@@ -6,5 +6,10 @@ public class Piece
     {
         this.color = color;
     }
+
+    public int getColor()
+    {
+        return this.color;
+    }
     
 }
