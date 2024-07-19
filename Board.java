@@ -190,8 +190,224 @@ public class Board
             }
         }
         return moves;
-        
     }
+
+    public ArrayList<int[]> getBishopMoves(int i, int j)
+    {
+        ArrayList<int[]> moves = new ArrayList<int[]>();
+        Piece curPiece = this.board[i][j].getPiece();
+        for(int dist = 1;dist<=13;dist++)
+        {
+                            //check +x and +y
+            if(i+dist>13||j+dist>13)
+            {
+                break;
+            }
+            Square moveSquare = this.board[i+dist][j+dist];
+            Piece movePiece = moveSquare.getPiece();
+            if(movePiece==null)
+            {
+                int[] toAdd = {i,j,i+dist,j+dist};
+                moves.add(toAdd);
+            }
+            else
+            {
+                if(movePiece.getColor()%2!=curPiece.getColor()%2)
+                {
+                    int[] toAdd={i,j,i+dist,j+dist};
+                    moves.add(toAdd);
+                }
+                break;
+            }
+        }
+
+        for(int dist = 1;dist<=13;dist++)
+        {
+                            //check +x and -y
+            if(i+dist>13||j-dist<0)
+            {
+                break;
+            }
+            Square moveSquare = this.board[i+dist][j-dist];
+            Piece movePiece = moveSquare.getPiece();
+            if(movePiece==null)
+            {
+                int[] toAdd = {i,j,i+dist,j-dist};
+                moves.add(toAdd);
+            }
+            else
+            {
+                if(movePiece.getColor()%2!=curPiece.getColor()%2)
+                {
+                    int[] toAdd={i,j,i+dist,j-dist};
+                    moves.add(toAdd);
+                }
+                break;
+            }
+        }
+
+        for(int dist = 1;dist<=13;dist++)
+        {
+                            //check -x and +y
+            if(i-dist<0||j+dist>13)
+            {
+                break;
+            }
+            Square moveSquare = this.board[i-dist][j+dist];
+            Piece movePiece = moveSquare.getPiece();
+            if(movePiece==null)
+            {
+                int[] toAdd = {i,j,i-dist,j+dist};
+                moves.add(toAdd);
+            }
+            else
+            {
+                if(movePiece.getColor()%2!=curPiece.getColor()%2)
+                {
+                    int[] toAdd={i,j,i-dist,j+dist};
+                    moves.add(toAdd);
+                }
+                break;
+            }
+        }
+
+        for(int dist = 1;dist<=13;dist++)
+        {
+                            //check -x and -y
+            if(i-dist<0||j-dist<0)
+            {
+                break;
+            }
+            Square moveSquare = this.board[i-dist][j-dist];
+            Piece movePiece = moveSquare.getPiece();
+            if(movePiece==null)
+            {
+                int[] toAdd = {i,j,i-dist,j-dist};
+                moves.add(toAdd);
+            }
+            else
+            {
+                if(movePiece.getColor()%2!=curPiece.getColor()%2)
+                {
+                    int[] toAdd={i,j,i-dist,j-dist};
+                    moves.add(toAdd);
+                }
+                break;
+            }
+        }
+
+        return moves;
+    }
+
+    public ArrayList<int[]> getRookMoves(int i, int j)
+    {
+        ArrayList<int[]> moves = new ArrayList<int[]>();
+        Piece curPiece = this.board[i][j].getPiece();
+        for(int dist = 1;dist<=13;dist++)
+        {
+                            //move up 
+            if(i+dist>13)
+            {
+                break;
+            }
+            Square moveSquare = this.board[i+dist][j];
+            Piece movePiece = moveSquare.getPiece();
+            if(movePiece==null)
+            {
+                int[] toAdd = {i,j,i+dist,j};
+                moves.add(toAdd);
+            }
+            else
+            {
+                if(movePiece.getColor()%2!=curPiece.getColor()%2)
+                {
+                    int[] toAdd = {i,j,i+dist,j};
+                    moves.add(toAdd);
+                }
+                break;
+            }
+        }
+        for(int dist = 1;dist<=13;dist++)
+        {
+                            //move right
+            if(j+dist>13)
+            {
+                break;
+            }
+            Square moveSquare = this.board[i][j+dist];
+            Piece movePiece = moveSquare.getPiece();
+            if(movePiece==null)
+            {
+                int[] toAdd = {i,j,i,j+dist};
+                moves.add(toAdd);
+            }
+            else
+            {
+                if(movePiece.getColor()%2!=curPiece.getColor()%2)
+                {
+                    int[] toAdd = {i,j,i,j+dist};
+                    moves.add(toAdd);
+                }
+                break;
+            }
+        }
+
+        for(int dist = 1;dist<=13;dist++)
+        {
+                            //move down
+            if(i-dist<0)
+            {
+                break;
+            }
+            Square moveSquare = this.board[i-dist][j];
+            Piece movePiece = moveSquare.getPiece();
+            if(movePiece==null)
+            {
+                int[] toAdd = {i,j,i-dist,j};
+                moves.add(toAdd);
+            }
+            else
+            {
+                if(movePiece.getColor()%2!=curPiece.getColor()%2)
+                {
+                    int[] toAdd = {i,j,i-dist,j};
+                    moves.add(toAdd);
+                }
+                break;
+            }
+
+        }
+                        
+        for(int dist = 1;dist<=13;dist++)
+        {
+                            //move lefft
+            if(j-dist<0)
+            {
+                break;
+            }
+            Square moveSquare = this.board[i][j-dist];
+            Piece movePiece = moveSquare.getPiece();
+            if(movePiece==null)
+            {
+                int[] toAdd = {i,j,i,j-dist};
+                moves.add(toAdd);
+            }
+            else
+            {
+                if(movePiece.getColor()%2!=curPiece.getColor()%2)
+                {
+                    int[] toAdd = {i,j,i,j-dist};
+                    moves.add(toAdd);
+                }
+                break;
+            }
+        }
+        
+
+        return moves;
+    }
+
+    
     //Get moves for player (color)
     public ArrayList<int[]> getMoves(int color)
     {
@@ -208,214 +424,16 @@ public class Board
                     if(curPiece instanceof Knight)
                     {
                         // check 1 2, 1 -2, 2 1, 2 -1, -2 -1, -2 1, -1,2, -1, -2
-                        
-                        
                     }
                     else if(curPiece instanceof Queen || curPiece instanceof Bishop )
                     {
                         // check up right diagonal 
-                        for(int dist = 1;dist<=13;dist++)
-                        {
-                            //check +x and +y
-                            if(i+dist>13||j+dist>13)
-                            {
-                                break;
-                            }
-                            Square moveSquare = this.board[i+dist][j+dist];
-                            Piece movePiece = curSquare.getPiece();
-                            if(movePiece==null)
-                            {
-                                int[] toAdd = {i,j,i+dist,j+dist};
-                                moves.add(toAdd);
-                            }
-                            else
-                            {
-                                if(movePiece.getColor()%2!=curPiece.getColor()%2)
-                                {
-                                    int[] toAdd={i,j,i+dist,j+dist};
-                                    moves.add(toAdd);
-                                }
-                                break;
-                            }
-                        }
-
-                        for(int dist = 1;dist<=13;dist++)
-                        {
-                            //check +x and -y
-                            if(i+dist>13||j-dist<0)
-                            {
-                                break;
-                            }
-                            Square moveSquare = this.board[i+dist][j-dist];
-                            Piece movePiece = curSquare.getPiece();
-                            if(movePiece==null)
-                            {
-                                int[] toAdd = {i,j,i+dist,j-dist};
-                                moves.add(toAdd);
-                            }
-                            else
-                            {
-                                if(movePiece.getColor()%2!=curPiece.getColor()%2)
-                                {
-                                    int[] toAdd={i,j,i+dist,j-dist};
-                                    moves.add(toAdd);
-                                }
-                                break;
-                            }
-                        }
-
-                        for(int dist = 1;dist<=13;dist++)
-                        {
-                            //check -x and +y
-                            if(i-dist<0||j+dist>13)
-                            {
-                                break;
-                            }
-                            Square moveSquare = this.board[i-dist][j+dist];
-                            Piece movePiece = curSquare.getPiece();
-                            if(movePiece==null)
-                            {
-                                int[] toAdd = {i,j,i-dist,j+dist};
-                                moves.add(toAdd);
-                            }
-                            else
-                            {
-                                if(movePiece.getColor()%2!=curPiece.getColor()%2)
-                                {
-                                    int[] toAdd={i,j,i-dist,j+dist};
-                                    moves.add(toAdd);
-                                }
-                                break;
-                            }
-                        }
-
-                        for(int dist = 1;dist<=13;dist++)
-                        {
-                            //check -x and -y
-                            if(i-dist<0||j-dist<0)
-                            {
-                                break;
-                            }
-                            Square moveSquare = this.board[i-dist][j-dist];
-                            Piece movePiece = curSquare.getPiece();
-                            if(movePiece==null)
-                            {
-                                int[] toAdd = {i,j,i-dist,j-dist};
-                                moves.add(toAdd);
-                            }
-                            else
-                            {
-                                if(movePiece.getColor()%2!=curPiece.getColor()%2)
-                                {
-                                    int[] toAdd={i,j,i-dist,j-dist};
-                                    moves.add(toAdd);
-                                }
-                                break;
-                            }
-                        }
-
+                        
                     }
 
                     else if(curPiece instanceof Rook||curPiece instanceof Queen)
                     {
-                        for(int dist = 1;dist<=13;dist++)
-                        {
-                            //move up 
-                            if(i+dist>13)
-                            {
-                                break;
-                            }
-                            Square moveSquare = this.board[i+dist][j];
-                            Piece movePiece = moveSquare.getPiece();
-                            if(movePiece==null)
-                            {
-                                int[] toAdd = {i,j,i+dist,j};
-                                moves.add(toAdd);
-                            }
-                            else
-                            {
-                                if(movePiece.getColor()%2!=curPiece.getColor()%2)
-                                {
-                                    int[] toAdd = {i,j,i+dist,j};
-                                    moves.add(toAdd);
-                                }
-                                break;
-                            }
-                        }
-                        for(int dist = 1;dist<=13;dist++)
-                        {
-                            //move right
-                            if(j+dist>13)
-                            {
-                                break;
-                            }
-                            Square moveSquare = this.board[i][j+dist];
-                            Piece movePiece = moveSquare.getPiece();
-                            if(movePiece==null)
-                            {
-                                int[] toAdd = {i,j,i,j+dist};
-                                moves.add(toAdd);
-                            }
-                            else
-                            {
-                                if(movePiece.getColor()%2!=curPiece.getColor()%2)
-                                {
-                                    int[] toAdd = {i,j,i,j+dist};
-                                    moves.add(toAdd);
-                                }
-                                break;
-                            }
-                        }
-
-                        for(int dist = 1;dist<=13;dist++)
-                        {
-                            //move down
-                            if(i-dist<0)
-                            {
-                                break;
-                            }
-                            Square moveSquare = this.board[i-dist][j];
-                            Piece movePiece = moveSquare.getPiece();
-                            if(movePiece==null)
-                            {
-                                int[] toAdd = {i,j,i-dist,j};
-                                moves.add(toAdd);
-                            }
-                            else
-                            {
-                                if(movePiece.getColor()%2!=curPiece.getColor()%2)
-                                {
-                                    int[] toAdd = {i,j,i-dist,j};
-                                    moves.add(toAdd);
-                                }
-                                break;
-                            }
-                        }
                         
-                        for(int dist = 1;dist<=13;dist++)
-                        {
-                            //move lefft
-                            if(j-dist<0)
-                            {
-                                break;
-                            }
-                            Square moveSquare = this.board[i][j-dist];
-                            Piece movePiece = moveSquare.getPiece();
-                            if(movePiece==null)
-                            {
-                                int[] toAdd = {i,j,i,j-dist};
-                                moves.add(toAdd);
-                            }
-                            else
-                            {
-                                if(movePiece.getColor()%2!=curPiece.getColor()%2)
-                                {
-                                    int[] toAdd = {i,j,i,j-dist};
-                                    moves.add(toAdd);
-                                }
-                                break;
-                            }
-                        }
                         
                         
                     }
