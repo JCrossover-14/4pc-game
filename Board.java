@@ -1,7 +1,7 @@
 
 import java.util.*;
 
-public class Board
+public class Board implements Cloneable
 {
     private Square[][] board;
 
@@ -10,6 +10,11 @@ public class Board
         this.board = new Square[14][14];
         initialize_board();
 
+    }
+
+    protected Object clone() throws CloneNotSupportedException
+    {
+        return super.clone();
     }
 
     public void initialize_board()
@@ -406,7 +411,37 @@ public class Board
 
         return moves;
     }
+    
 
+    public ArrayList<int[]> getKingMoves(int i, int j)
+    {
+        int[][] kingMoves = {{1,1},{1,-1},{-1,1},{1,0},{-1,-1},{-1,0},{0,1},{0,-1}};
+        ArrayList<int[]> moves = new ArrayList<int[]>();
+        Piece curPiece = this.board[i][j].getPiece();
+        for(int[] move:kingMoves)
+        {
+            Square moveSquare = this.board[i+move[0]][j+move[1]];
+            if(moveSquare.getValidity())
+            {
+                Piece movePiece = moveSquare.getPiece();
+                if(movePiece==null)
+                {
+                    int[] toAdd = {i,j,i+move[0],j+move[1]};
+                    moves.add(toAdd);
+                }
+                else
+                {
+                    if(movePiece.getColor()%2!=curPiece.getColor()%2)
+                    {
+                        int[] toAdd = {i,j,i+move[0],j+move[1]};
+                        moves.add(toAdd);
+                    }
+                }
+            }
+        }
+        return moves;
+
+    }
     
     //Get moves for player (color)
     public ArrayList<int[]> getMoves(int color)
@@ -448,7 +483,8 @@ public class Board
                     }
                     else if(curPiece instanceof King)
                     {
-                        
+                        ArrayList<int[]> kingm = getKingMoves(i,j);
+                        for(int[]x:kingm) moves.add(x);
                     }
                     else if(curPiece instanceof Pawn)
                     {
@@ -601,5 +637,81 @@ public class Board
             }
         }
         return moves;
+    }
+
+    public boolean isCheck(int color)
+    {
+        if(color%2==0)
+        {
+            // look for r and y which is 1 and 3
+            ArrayList<int[]> rmoves = getMoves(1);
+            ArrayList<int[]> ymoves = getMoves(3);
+            for(int[] x:rmoves)
+            {
+                Piece movePiece = board[x[2]][x[3]].getPiece();
+                if(movePiece!=null&&movePiece instanceof King&&movePiece.getColor()==color)
+                {
+                    return true;
+                }
+            }
+            for(int[] x:ymoves)
+            {
+                Piece movePiece = board[x[2]][x[3]].getPiece();
+                if(movePiece!=null&&movePiece instanceof King&&movePiece.getColor()==color)
+                {
+                    return true;
+                }
+            }
+        }
+        else
+        {
+            ArrayList<int[]> bmoves = getMoves(2);
+            ArrayList<int[]> gmoves = getMoves(4);
+            for(int[] x:bmoves)
+            {
+                Piece movePiece = board[x[2]][x[3]].getPiece();
+                if(movePiece!=null&&movePiece instanceof King&&movePiece.getColor()==color)
+                {
+                    return true;
+                }
+            }
+            for(int[] x:gmoves)
+            {
+                Piece movePiece = board[x[2]][x[3]].getPiece();
+                if(movePiece!=null&&movePiece instanceof King&&movePiece.getColor()==color)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public void move(int x1, int y1, int x2, int y2)
+    {
+        Piece movePiece = this.board[x1][y1].getPiece();
+        this.board[x2][y2].setPiece(movePiece);
+        this.board[x1][y1].setPiece(null);
+    }
+    public ArrayList<int[]> getLegalMoves(int color)
+    {
+        ArrayList<int[]> moves = getMoves(color);
+        ArrayList<int[]> legalMoves = new ArrayList<int[]>();
+        for(int[] move:moves)
+        {
+            try
+            {
+                Board futureBoard = (Board)(this.clone());
+                futureBoard.move(move[0],move[1],move[2],move[3]);
+                if(!futureBoard.isCheck(color))
+                {
+                    legalMoves.add(move);
+                }
+            }
+            catch(CloneNotSupportedException e)
+            {
+                System.out.println("What the fuck went wrong here??");
+            }
+        }
+        return legalMoves;
     }
 }
