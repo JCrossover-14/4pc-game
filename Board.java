@@ -19,6 +19,12 @@ public class Board implements Cloneable
 
     public void initialize_board()
     {
+        for(int i = 0; i < 14; i++) {
+            for(int j = 0; j < 14; j++) {
+                board[i][j] = new Square(i, j, true);
+            }
+        }
+        
         for(int i=0;i<14;i++)
         {
             for(int j=0;j<14;j++)
@@ -166,6 +172,8 @@ public class Board implements Cloneable
                 board[i][j]=square;
             }
         }
+
+
     }
 
     public ArrayList<int[]> getKnightMoves(int i,int j)
@@ -175,6 +183,8 @@ public class Board implements Cloneable
         Piece curPiece = this.board[i][j].getPiece();
         for(int[] move:knightMoves)
         {
+            //System.out.println("Considering "+Integer.toString(i+move[0])+" "+Integer.toString(j+move[1])+" as a move ");
+            if((i+move[0])<0||(i+move[0])>=14||(j+move[1])<0||(j+move[1])>=14) continue;
             Square moveSquare = this.board[i+move[0]][j+move[1]];
             if(moveSquare.getValidity())
             {
@@ -183,6 +193,7 @@ public class Board implements Cloneable
                 {
                     int[] toAdd = {i,j,i+move[0],j+move[1]};
                     moves.add(toAdd);
+                    //System.out.println("valid");
                 }
                 else
                 {
@@ -190,9 +201,12 @@ public class Board implements Cloneable
                     {
                         int[] toAdd = {i,j,i+move[0],j+move[1]};
                         moves.add(toAdd);
+                        System.out.println("valid");
                     }
+                    //else System.out.println("cannot take own piece");
                 }
             }
+            //else System.out.println("Square invalid");
         }
         return moves;
     }
@@ -209,6 +223,7 @@ public class Board implements Cloneable
                 break;
             }
             Square moveSquare = this.board[i+dist][j+dist];
+            if(!moveSquare.getValidity()) break;
             Piece movePiece = moveSquare.getPiece();
             if(movePiece==null)
             {
@@ -234,6 +249,7 @@ public class Board implements Cloneable
                 break;
             }
             Square moveSquare = this.board[i+dist][j-dist];
+            if(!moveSquare.getValidity()) break;
             Piece movePiece = moveSquare.getPiece();
             if(movePiece==null)
             {
@@ -259,6 +275,7 @@ public class Board implements Cloneable
                 break;
             }
             Square moveSquare = this.board[i-dist][j+dist];
+            if(!moveSquare.getValidity()) break;
             Piece movePiece = moveSquare.getPiece();
             if(movePiece==null)
             {
@@ -284,6 +301,7 @@ public class Board implements Cloneable
                 break;
             }
             Square moveSquare = this.board[i-dist][j-dist];
+            if(!moveSquare.getValidity()) break;
             Piece movePiece = moveSquare.getPiece();
             if(movePiece==null)
             {
@@ -316,6 +334,7 @@ public class Board implements Cloneable
                 break;
             }
             Square moveSquare = this.board[i+dist][j];
+            if(!moveSquare.getValidity()) break;
             Piece movePiece = moveSquare.getPiece();
             if(movePiece==null)
             {
@@ -340,6 +359,7 @@ public class Board implements Cloneable
                 break;
             }
             Square moveSquare = this.board[i][j+dist];
+            if(!moveSquare.getValidity()) break;
             Piece movePiece = moveSquare.getPiece();
             if(movePiece==null)
             {
@@ -366,6 +386,7 @@ public class Board implements Cloneable
             }
             Square moveSquare = this.board[i-dist][j];
             Piece movePiece = moveSquare.getPiece();
+            if(!moveSquare.getValidity()) break;
             if(movePiece==null)
             {
                 int[] toAdd = {i,j,i-dist,j};
@@ -391,6 +412,7 @@ public class Board implements Cloneable
                 break;
             }
             Square moveSquare = this.board[i][j-dist];
+            if(!moveSquare.getValidity()) break;
             Piece movePiece = moveSquare.getPiece();
             if(movePiece==null)
             {
@@ -420,6 +442,10 @@ public class Board implements Cloneable
         Piece curPiece = this.board[i][j].getPiece();
         for(int[] move:kingMoves)
         {
+            if(i+move[0]<0||i+move[0]>=14||j+move[1]<0||j+move[1]>=14)
+            {
+                continue;
+            }
             Square moveSquare = this.board[i+move[0]][j+move[1]];
             if(moveSquare.getValidity())
             {
@@ -458,6 +484,7 @@ public class Board implements Cloneable
                 {
                     if(curPiece instanceof Knight)
                     {
+                        
                         ArrayList<int[]> knightm = getKnightMoves(i,j);
                         for(int[] x:knightm) moves.add(x);
                         // check 1 2, 1 -2, 2 1, 2 -1, -2 -1, -2 1, -1,2, -1, -2
@@ -501,10 +528,11 @@ public class Board implements Cloneable
                                 if(i==1)
                                 {
                                     moveSquare = this.board[i+2][j];
+                                    int[] toAdd1 = Arrays.copyOf(toAdd,toAdd.length);
                                     if(moveSquare.getPiece()==null)
                                     {
-                                        toAdd[2]+=1;
-                                        moves.add(toAdd);
+                                        toAdd1[2]+=1;
+                                        moves.add(toAdd1);
                                     }
                                 }
                             }
@@ -537,10 +565,12 @@ public class Board implements Cloneable
                                 if(j==1)
                                 {
                                     moveSquare = this.board[i][j+2];
+                                    
                                     if(moveSquare.getPiece()==null)
                                     {
-                                        toAdd[3]+=1;
-                                        moves.add(toAdd);
+                                        int[] toAdd1 = Arrays.copyOf(toAdd,toAdd.length);
+                                        toAdd1[3]+=1;
+                                        moves.add(toAdd1);
                                     }
                                 }
                             }
@@ -571,10 +601,11 @@ public class Board implements Cloneable
                                 if(i==12)
                                 {
                                     moveSquare = this.board[i-2][j];
+                                    int[] toAdd1 = Arrays.copyOf(toAdd,toAdd.length);
                                     if(moveSquare.getPiece()==null)
                                     {
-                                        toAdd[2]-=1;
-                                        moves.add(toAdd);
+                                        toAdd1[2]-=1;
+                                        moves.add(toAdd1);
                                     }
                                 }
                             }
@@ -608,8 +639,10 @@ public class Board implements Cloneable
                                     moveSquare = this.board[i][j-2];
                                     if(moveSquare.getPiece()==null)
                                     {
-                                        toAdd[3]-=1;
-                                        moves.add(toAdd);
+                                        
+                                        int[] toAdd1 = Arrays.copyOf(toAdd,toAdd.length);
+                                        toAdd1[3]-=1;
+                                        moves.add(toAdd1);
                                     }
                                 }
                             }
@@ -690,7 +723,7 @@ public class Board implements Cloneable
     {
         Piece movePiece = this.board[x1][y1].getPiece();
         this.board[x2][y2].setPiece(movePiece);
-        this.board[x1][y1].setPiece(null);
+        this.board[x1][y1].setPiece();
     }
     public ArrayList<int[]> getLegalMoves(int color)
     {
@@ -714,4 +747,33 @@ public class Board implements Cloneable
         }
         return legalMoves;
     }
+
+    public String toString()
+    {
+        String ans = "";
+        for(int i=0;i<14;i++)
+        {
+            for(int j=0;j<14;j++)
+            {
+                if(this.board[i][j].getPiece()==null)
+                {
+                    if(this.board[i][j].getValidity()) ans+=".";
+                    else ans+="+";
+                }
+                else
+                {
+                    Piece curPiece = this.board[i][j].getPiece();
+                    if(curPiece instanceof Pawn) ans+="P";
+                    else if(curPiece instanceof Knight) ans+="N";
+                    else if (curPiece instanceof Rook) ans+="R";
+                    else if(curPiece instanceof Queen) ans+="Q";
+                    else if(curPiece instanceof King) ans+="K";
+                    else if(curPiece instanceof Bishop) ans+="B";
+                }
+            }
+            ans+='\n';
+        }
+        return ans;
+    }
 }
+
