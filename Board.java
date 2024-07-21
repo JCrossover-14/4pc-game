@@ -8,13 +8,6 @@ public class Board implements Cloneable
     public Board()
     {
         this.board = new Square[14][14];
-        initialize_board();
-
-    }
-
-    protected Object clone() throws CloneNotSupportedException
-    {
-        return super.clone();
     }
 
     public void initialize_board()
@@ -731,18 +724,11 @@ public class Board implements Cloneable
         ArrayList<int[]> legalMoves = new ArrayList<int[]>();
         for(int[] move:moves)
         {
-            try
+            Board futureBoard = (Board)(this.clone());
+            futureBoard.move(move[0],move[1],move[2],move[3]);
+            if(!futureBoard.isCheck(color))
             {
-                Board futureBoard = (Board)(this.clone());
-                futureBoard.move(move[0],move[1],move[2],move[3]);
-                if(!futureBoard.isCheck(color))
-                {
-                    legalMoves.add(move);
-                }
-            }
-            catch(CloneNotSupportedException e)
-            {
-                System.out.println("What the fuck went wrong here??");
+                legalMoves.add(move);
             }
         }
         return legalMoves;
@@ -774,6 +760,36 @@ public class Board implements Cloneable
             ans+='\n';
         }
         return ans;
+    }
+
+    @Override
+    public Board clone() 
+    {
+        Board cloned;
+        try {
+            cloned = (Board) super.clone(); // Shallow copy
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException("Cloning not supported", e);
+        }
+        
+        cloned.board = new Square[14][14]; // Initialize the new board array
+        
+        // Clone each Square in the board
+        for (int i = 0; i < 14; i++) 
+        {
+            for (int j = 0; j < 14; j++) 
+            {
+                try{
+                    cloned.board[i][j] = (Square)(this.board[i][j].clone());
+                 }
+                 catch (CloneNotSupportedException e)
+                 {
+                    throw new RuntimeException("No cloning available",e);
+                 } // Deep clone each Square
+            }
+        }
+        
+        return cloned;
     }
 }
 

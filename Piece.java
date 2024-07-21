@@ -1,4 +1,4 @@
-public class Piece 
+public class Piece implements Cloneable
 {
     private int color;
 
@@ -11,5 +11,11 @@ public class Piece
     {
         return this.color;
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+    
     
 }

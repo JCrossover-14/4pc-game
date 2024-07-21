@@ -24,4 +24,9 @@ public class King extends Piece
         return this.moved;
     }
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
 }

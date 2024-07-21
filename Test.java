@@ -12,6 +12,7 @@ public class Test
     {
         Scanner input = new Scanner(System.in);    
         Board gameboard = new Board();
+        gameboard.initialize_board();
         System.out.println(gameboard.toString());
         //ArrayList<int[]> moves = gameboard.getLegalMoves(1);
         //for(int[] move: moves)

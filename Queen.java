@@ -12,4 +12,9 @@ public class Queen extends Piece
     {
         return this.value;
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

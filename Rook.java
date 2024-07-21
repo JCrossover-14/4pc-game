@@ -11,4 +11,9 @@ public class Rook extends Piece
     {
         return this.value;
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }
