@@ -1,5 +1,5 @@
 import java.util.Scanner;
-
+import java.util.*;
 public class Main {
     private boolean gamestate = true;
     private Scanner scanner;
@@ -27,33 +27,38 @@ public class Main {
             }
         }
 
+        Board gameBoard = new Board();
+        gameBoard.initialize_board();
         // Main game loop
-        while (gamestate) {
+        while (gamestate) 
+        {
+            System.out.print(gameBoard.toString());
             if (turn) {
                 System.out.println("Input your next move as four numbers: x1 y1 x2 y2 separated by spaces");
                 int x1 = scanner.nextInt();
                 int y1 = scanner.nextInt();
                 int x2 = scanner.nextInt();
                 int y2 = scanner.nextInt();
-                
                 boolean validMove = false;
-                for (int i = 1; i < getMoves(color).size(); i++) {
-                    if (getMoves(color).get(i).equals(new int[]{x1, y1, x2, y2})) {
+                ArrayList<int[]> validMoves = gameBoard.getLegalMoves(color);
+                if(validMoves.size()==0)
+                {
+                    System.out.println("You just got beaten by the ChloBot!");
+                }
+                for (int i = 0; i < validMoves.size(); i++) {
+                    if (validMoves.get(i).equals(new int[]{x1, y1, x2, y2}) )
+                    {
                         validMove = true;
                         break;
                     }
                 }
-                
                 if (!validMove) {
                     System.out.println("That is an invalid move");
                 } else {
                     if (isMate(new int[]{x1, y1, x2, y2})) {
                         System.out.println("Congratulations! You win!");
                         gamestate = false;
-                    } else if (isMate(algorithm(new int[]{x1, y1, x2, y2}))) {
-                        System.out.println("You just got beaten by the Chloblot!");
-                        gamestate = false;
-                    } else {
+                    }  else {
                         System.out.println("My next move is: " + algorithm(new int[]{x1, y1, x2, y2}));
                         color = (color % 4) + 1;
                     }
