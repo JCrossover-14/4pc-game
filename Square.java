@@ -1,4 +1,4 @@
-public class Square 
+public class Square implements Cloneable
 {
     private static int x;
     private static int y;
@@ -7,6 +7,8 @@ public class Square
 
     private int attackedByR;
     private int attackedByB;
+
+
     
     public Square(int x, int y, Piece piece)
     {
@@ -45,7 +47,6 @@ public class Square
     {
         return this.validity;
     }
-
     public void addAttacker(int color)
     {
         if(color%2==0) this.attackedByR++;
@@ -58,6 +59,18 @@ public class Square
         else this.attackedByB--;
     }
 
-
+    @Override
+    protected Object clone() throws CloneNotSupportedException 
+    {
+        // Perform a shallow copy of the Square
+        Square clonedSquare = (Square) super.clone();
+        
+        // Deep clone the Piece object
+        if (this.piece != null) {
+            clonedSquare.piece = (Piece) this.piece.clone();
+        }
+        
+        return clonedSquare;
+    }
     
 }
