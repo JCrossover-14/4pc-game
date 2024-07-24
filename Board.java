@@ -40,11 +40,11 @@ public class Board implements Cloneable
             //rook
             if(ry[col-3]==1)
             {
-                Piece piece = new Rook(1);
+                Piece piece = new Rook(3);
                 Square square = new Square(0,col,piece);
                 board[0][col]= square;
                 
-                Piece piece1 = new Rook(3);
+                Piece piece1 = new Rook(1);
                 Square square1 = new Square(13,13-col,piece1);
                 board[13][13-col] = square1;
                 
@@ -59,11 +59,11 @@ public class Board implements Cloneable
             //knight
             else if(ry[col-3]==2)
             {
-                Piece piece = new Knight(1);
+                Piece piece = new Knight(3);
                 Square square = new Square(0,col,piece);
                 board[0][col]= square;
 
-                Piece piece1 = new Knight(3);
+                Piece piece1 = new Knight(1);
                 Square square1 = new Square(13,13-col,piece1);
                 board[13][13-col] = square1;
                 
@@ -78,11 +78,11 @@ public class Board implements Cloneable
             //bishop
             else if(ry[col-3]==3)
             {
-                Piece piece = new Bishop(1);
+                Piece piece = new Bishop(3);
                 Square square = new Square(0,col,piece);
                 board[0][col]= square;
 
-                Piece piece1 = new Bishop(3);
+                Piece piece1 = new Bishop(1);
                 Square square1 = new Square(13,13-col,piece1);
                 board[13][13-col] = square1;
                 
@@ -97,11 +97,11 @@ public class Board implements Cloneable
             //queen
             else if(ry[col-3]==4)
             {
-                Piece piece = new Queen(1);
+                Piece piece = new Queen(3);
                 Square square = new Square(0,col,piece);
                 board[0][col]= square;
 
-                Piece piece1 = new Queen(3);
+                Piece piece1 = new Queen(1);
                 Square square1 = new Square(13,13-col,piece1);
                 board[13][13-col] = square1;
                 
@@ -116,11 +116,11 @@ public class Board implements Cloneable
             //king
             else
             {
-                Piece piece = new King(1);
+                Piece piece = new King(3);
                 Square square = new Square(0,col,piece);
                 board[0][col]= square;
 
-                Piece piece1 = new King(3);
+                Piece piece1 = new King(1);
                 Square square1 = new Square(13,13-col,piece1);
                 board[13][13-col] = square1;
                 
