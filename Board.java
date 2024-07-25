@@ -138,11 +138,11 @@ public class Board implements Cloneable
 
         for(int i=3;i<=10;i++)
         {
-            Piece piece = new Pawn(1);
+            Piece piece = new Pawn(3);
             Square square = new Square(1,i,piece);
             board[1][i]=square;
 
-            Piece piece1 = new Pawn(3);
+            Piece piece1 = new Pawn(1);
             Square square1 = new Square(12,i,piece1);
             board[12][i]=square1;
 
@@ -733,6 +733,11 @@ public class Board implements Cloneable
         }
         return legalMoves;
     }
+    public static final String RESET = "\u001B[0m";
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String BLUE = "\u001B[34m";
 
     public String toString()
     {
@@ -749,12 +754,17 @@ public class Board implements Cloneable
                 else
                 {
                     Piece curPiece = this.board[i][j].getPiece();
+                    if(curPiece.getColor()==1) ans+= RED;
+                    if(curPiece.getColor()==2) ans+= BLUE;
+                    if(curPiece.getColor()==3) ans+= YELLOW;
+                    if(curPiece.getColor()==4) ans+= GREEN;
                     if(curPiece instanceof Pawn) ans+="P";
                     else if(curPiece instanceof Knight) ans+="N";
                     else if (curPiece instanceof Rook) ans+="R";
                     else if(curPiece instanceof Queen) ans+="Q";
                     else if(curPiece instanceof King) ans+="K";
                     else if(curPiece instanceof Bishop) ans+="B";
+                    ans+= RESET;
                 }
             }
             ans+='\n';
