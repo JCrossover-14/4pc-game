@@ -510,7 +510,7 @@ public class Board implements Cloneable
                     {
                         //check forward
                         int curColor = curPiece.getColor();
-                        if(curColor==1)
+                        if(curColor==3)
                         {
                             //direction is i+1 for red
                             Square moveSquare = this.board[i+1][j];
@@ -583,7 +583,7 @@ public class Board implements Cloneable
                                 moves.add(toAdd);
                             }
                         }
-                        else if(curColor==3)
+                        else if(curColor==1)
                         {
                             // direction is i-1 for yellow 
                             Square moveSquare = this.board[i-1][j];
