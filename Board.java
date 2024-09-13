@@ -798,8 +798,22 @@ public class Board implements Cloneable
                  } // Deep clone each Square
             }
         }
-        
         return cloned;
     }
+    private boolean isMate(int color) {
+        if (isCheck(color)&& getLegalMoves(color).size()==0){return true;}
+        return false; 
 }
 
+private int[] algorithm(int color, Board board) {
+    Random random = new Random();
+    ArrayList<int[]> a = getLegalMoves(color);
+    int x = random.nextInt(a.size());
+    return a.get(x);
+}
+
+//private int[] algorithm1(int color) {
+    //for (i =0; i<getLegalMoves(color).size(); i++){
+        
+  //  }
+}
